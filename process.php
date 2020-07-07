@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php 
+require_once('header.php');
+session_start();
+?>
 <body class="add">
 <div class="container inner saved">
 <header class="masthead mb-auto">
@@ -86,6 +89,7 @@
     //if form validates, try to connect to database and add info
 
     if ($ok === true) {
+        $_SESSION['first_name'] = $first_name;
         try {
             $target = UPLOADPATH . $photo;
             move_uploaded_file($_FILES['photo']['tmp_name'], $target);
@@ -120,9 +124,13 @@
 
             // execute the insert
             $statement->execute();
-
-            // show message
-            echo "<p> Song added! Thanks for sharing! </p>";
+            if(isset($_SESSION['first_name'])){
+                // show message
+                echo "<p> Song added! Thanks for sharing, " . $_SESSION['first_name'] . "!</p>";
+            } else {
+                echo "<p> Song added! Thanks for sharing!</p>";
+            }
+            
 
             // disconnecting
             $statement->closeCursor();

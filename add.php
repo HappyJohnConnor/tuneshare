@@ -1,4 +1,6 @@
-<?php require_once('header.php'); ?>
+<?php 
+session_start();
+require_once('header.php'); ?>
 <body class="add">
 <div class="container inner">
 <header class="masthead mb-auto">
@@ -59,6 +61,11 @@
     ?>
     <main>
     <h1>Share Your Fave Tunes</h1>
+    <?php
+    if(isset($_SESSION['first_name'])){
+      echo"<h2>Hello, ". $_SESSION['first_name']. "</h2>";
+    }
+    ?>
       <form action="process.php" method="post" enctype="multipart/form-data" class="form">
         <!-- add hidden input with user id if editing -->
         <input type="hidden" name="user_id" value="<?php echo $id;?>">
